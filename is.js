@@ -23,9 +23,9 @@ is.def = (value) => value !== undefined;
 is.arr = (value) => Array.isArray(value);
 
 // value is a simple object or null
-// typeof null === 'object', so it includes it
 is.obj = (value) =>
-  typeof value === 'object' && !Array.isArray(value);
+  typeof value === 'object' &&
+  value !== null 
 
 // value is a function
 is.fun = (value) => typeof value === 'function';
