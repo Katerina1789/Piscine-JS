@@ -25,7 +25,8 @@ is.arr = (value) => Array.isArray(value);
 // value is a simple object or null
 is.obj = (value) =>
   typeof value === 'object' &&
-  value !== null;
+  value !== null &&
+  !Array.isArray(value);
 
 // value is a function
 is.fun = (value) => typeof value === 'function';
