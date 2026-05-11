@@ -4,7 +4,7 @@ const smalls = Number.MIN_VALUE;
 
 // biggie: largest number JavaScript can represent (and it is approximately 1.7976931348623157E+308)
 // beyond this, numbers become Infinity 
-const biggie = Number.MAX_VALUE;
+const biggie = Number.MAX_VALUE + 1;
 
 /*
 TESTING:
