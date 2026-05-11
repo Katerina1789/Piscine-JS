@@ -1,15 +1,15 @@
-// smalls: smallest positive number JavaScript can represent (and it is 5e-324)
-// this is the closest number to 0 without being 0
-const smalls = Number.MIN_VALUE;
+// smalls: smallest number JavaScript can represent (and it is minus infinity)
+// the smallest positive numeric value representable in JavaScript is Number.MIN_VALUE (which is 5E-324)
+const smalls = Number.NEGATIVE_INFINITY;
 
 // biggie: largest number JavaScript can represent (and it is infinity)
-// the largest printable number is Number.MAX_VALUE (which is approximately 1.7976931348623157e+308)
+// the largest positive numeric value representable in JavaScript is Number.MAX_VALUE (which is approximately 1.7976931348623157e+308)
 const biggie = Number.POSITIVE_INFINITY;
 
 /*
 TESTING:
 console.log('--- smalls ---');
-console.log(smalls); // 5e-324 (very close to 0)
+console.log(smalls); // -Infinity
 
 console.log('--- biggie ---');
 console.log(biggie); // Infinity
