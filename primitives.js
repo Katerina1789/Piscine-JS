@@ -12,3 +12,20 @@ const bool = true;
 
 // constant undefined value (no assigned value)
 const undef = undefined;
+
+/*
+TESTING:
+console.log(str);        // 'Biba Buba'
+console.log(typeof str); // 'string'
+
+console.log(num);        // 1510
+console.log(typeof num); // 'number'
+
+console.log(bool);       // true
+console.log(typeof bool);// 'boolean'
+
+console.log(undef);      // undefined
+console.log(typeof undef);// 'undefined'
+
+run in Terminal: node ./primitives.js 
+*/

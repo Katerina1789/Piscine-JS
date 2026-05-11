@@ -43,3 +43,22 @@ const nested = Object.freeze({
     bool: true,
   }),
 });
+
+/*
+TESTING:
+console.log(escapeStr); // check special characters
+
+console.log(arr);       // [4, '2']
+arr[0] = 999;
+console.log(arr);       // still [4, '2'] because frozen
+
+console.log(obj);
+obj.str = 'changed';
+console.log(obj.str);   // still 'Biba Buba'
+
+console.log(nested);
+nested.arr[0] = 999;
+console.log(nested.arr[0]); // still 4
+
+run in Terminal: node ./declarations.js  
+*/
