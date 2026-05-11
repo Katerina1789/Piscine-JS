@@ -2,7 +2,7 @@
 const is = {};
 
 // value is a number (but not NaN (NotANumber))
-is.num = (value) => typeof value === 'number' && !Number.isNaN(value);
+is.num = (value) => typeof value === 'number';
 
 // value is NaN
 is.nan = (value) => Number.isNaN(value);
