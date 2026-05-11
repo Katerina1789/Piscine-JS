@@ -12,6 +12,8 @@ const whisper = (str) => `*${str.toLowerCase()}*`;
 
 // capitalize: first letter uppercase, rest lowercase
 const capitalize = (str) => {
+    // "==" / "!=" -> values are compared after JavaScript tries to convert types, which can cause weird results
+    // "===" / "!==" -> checks BOTH value and type !!! PREFER THIS !!!
   if (str.length === 0) return '';
   return str[0].toUpperCase() + str.slice(1).toLowerCase();
 };
