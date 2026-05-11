@@ -6,7 +6,8 @@ const smalls = Number.MIN_VALUE;
 // the largest printable number is Number.MAX_VALUE (which is approximately 1.7976931348623157e+308)
 const biggie = Number.POSITIVE_INFINITY;
 
-
+/*
+TESTING:
 console.log('--- smalls ---');
 console.log(smalls); // 5e-324 (very close to 0)
 
@@ -21,3 +22,5 @@ console.log('--- behavior checks ---');
 console.log(smalls > 0); // true
 console.log(biggie + 1 === biggie); // true
 
+run in Terminal: node ./biggie-smalls.js
+*/
