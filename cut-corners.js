@@ -39,7 +39,7 @@ export function round(n) {
 }
 
 
-
+/*
 const nums = [ Infinity, -Infinity, NaN, "-1.123", -0.123, -0, 0, 0.123, 13.37, 42.84, 3.7, -3.7, 3.1, -3.1]
 
 console.log('Trunc')
@@ -50,3 +50,4 @@ console.log('Floor')
 console.log(nums.map(floor)) // [ Infinity, -Infinity, NaN, -2, -1, -0, 0, 0, 13, 42, 3, -4, 3, -4 ]
 console.log('Round')
 console.log(nums.map(round)) // [ Infinity, -Infinity, NaN, -1, -0, 0, 0, 0, 13, 43, 4, -4, 3, -3 ]
+*/
