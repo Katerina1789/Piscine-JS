@@ -2,7 +2,7 @@
 // Using Math.round(), Math.floor(), Math.ceil(), Math.trunc() isn't allowed but they would look like this: return Math.round(n), return Math.floor(n), return Math.ceil(n), return Math.trunc(n)
 
 // get integer part toward zero without %, bitwise, strings, or Math.floor
-function trunc(n) {
+export function trunc(n) {
   return n < 0 ? -((0 - n) - (0 - n) / 1) : n - n / 1
 }
 
@@ -24,10 +24,6 @@ export function round(n) {
   const d = n - t
   return n >= 0 ? (d >= 0.5 ? t + 1 : t) : (d <= -0.5 ? t - 1 : t)
 }
-
-// export trunc last so it is visible
-export { trunc }
-
 
 
 /*
