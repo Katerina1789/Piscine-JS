@@ -1,13 +1,16 @@
 // Rounding means moving a number to the nearest integer depending on its decimal part
 // Using Math.round(), Math.floor(), Math.ceil(), Math.trunc() isn't allowed but they would look like this: return Math.round(n), return Math.floor(n), return Math.ceil(n), return Math.trunc(n)
 
+// trunc removes the decimal part and keeps only the integer part
 export function trunc(n) {
-  // move toward zero in small steps until crossing the integer boundary
-  let i = n
-  while (i !== 0 && (i > 0 ? i - 1 >= n : i + 1 <= n)) {
-    i = i > 0 ? i - 1 : i + 1
-  }
-  return i
+  const s = Math.sign(n)
+  let a = Math.abs(n)
+
+  // reduce a until it's < 1
+  while (a >= 1) a -= 1
+
+  // now a is the fractional part
+  return s * (Math.abs(n) - a)
 }
 
 export function floor(n) {
@@ -25,4 +28,3 @@ export function round(n) {
   const d = n - t
   return n >= 0 ? (d >= 0.5 ? t + 1 : t) : (d <= -0.5 ? t - 1 : t)
 }
-
