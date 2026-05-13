@@ -32,9 +32,14 @@ export function keepLast(str) {
 
 // keepFirstLast returns the first 2 and last 2 characters
 export function keepFirstLast(str) {
+  // for very short strings, returns the original string
+  if (str.length <= 2) {
+    return str
+  }
   // combines the first 2 and last 2 characters
   return str.slice(0, 2) + str.slice(str.length - 2)
 }
+
 
 /*
 TESTING:
