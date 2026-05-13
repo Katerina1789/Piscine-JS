@@ -1,11 +1,58 @@
 // Rounding means moving a number to the nearest integer depending on its decimal part
 // Using Math.round(), Math.floor(), Math.ceil(), Math.trunc() isn't allowed but they would look like this: return Math.round(n), return Math.floor(n), return Math.ceil(n), return Math.trunc(n)
 
+
+// trunc removes the decimal part and keeps only the integer part
+export function trunc(n) {
+  // moves toward zero by stepping 1 at a time
+  let t = 0
+
+  if (n > 0) {
+    // count up until the next step would be bigger than n
+    while (t + 1 <= n) {
+      t = t + 1
+    }
+  } else if (n < 0) {
+    // count down until the next step would be smaller than n
+    while (t - 1 >= n) {
+      t = t - 1
+    }
+  }
+
+  return t
+}
+
+// floor returns the largest integer less than or equal to n
+export function floor(n) {
+  const t = trunc(n)
+
+  // if already an integer, return it
+  if (t === n) {
+    return n
+  }
+
+  // positive: trunc is already floor
+  // negative: floor is one less than trunc
+  return n > 0 ? t : t - 1
+}
+
+// ceil returns the smallest integer greater than or equal to n
+export function ceil(n) {
+  const t = trunc(n)
+
+  // if already an integer, return it
+  if (t === n) {
+    return n
+  }
+
+  // positive: ceil is one more than trunc
+  // negative: trunc is already ceil
+  return n > 0 ? t + 1 : t
+}
+
 // round returns the nearest integer
 export function round(n) {
-  // get the integer part
   const t = trunc(n)
-  // get the decimal part
   const decimal = n - t
 
   // positive numbers: .5 rounds up
@@ -15,32 +62,6 @@ export function round(n) {
 
   // negative numbers: -.5 rounds down (toward -∞)
   return decimal <= -0.5 ? t - 1 : t
-}
-
-// ceil returns the smallest integer greater than or equal to n
-export function ceil(n) {
-  // if n is already an integer, return it
-  if (n === trunc(n)) {
-    return n
-  }
-  // positive numbers go up to the next integer
-  return n > 0 ? trunc(n) + 1 : trunc(n)
-}
-
-// floor returns the largest integer less than or equal to n
-export function floor(n) {
-  // if n is already an integer, return it
-  if (n === trunc(n)) {
-    return n
-  }
-  // negative numbers go down to the next integer
-  return n < 0 ? trunc(n) - 1 : trunc(n)
-}
-
-// trunc removes the decimal part and keeps only the integer part
-export function trunc(n) {
-  // moves toward zero by removing decimals
-  return n < 0 ? -Math.floor(-n) : Math.floor(n)
 }
 
 
