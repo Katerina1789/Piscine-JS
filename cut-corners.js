@@ -1,32 +1,35 @@
 // Rounding means moving a number to the nearest integer depending on its decimal part
 // Using Math.round(), Math.floor(), Math.ceil(), Math.trunc() isn't allowed but they would look like this: return Math.round(n), return Math.floor(n), return Math.ceil(n), return Math.trunc(n)
 
+// get fractional part without %, bitwise, or strings
+function frac(n) {
+  return n - (n < 0 ? -Math.floor(-n) : Math.floor(n))
+}
+
 // trunc removes the decimal part and keeps only the integer part
 export function trunc(n) {
-  return parseInt(n)
+  return n < 0 ? -Math.floor(-n) : Math.floor(n)
 }
 
-// floor returns the largest integer less than or equal to n
+// floor returns the largest integer <= n
 export function floor(n) {
-  const t = trunc(n)
-  return t === n ? n : (n < 0 ? t - 1 : t)
+  const f = frac(n)
+  return f === 0 ? n : (n < 0 ? n - f - 1 : n - f)
 }
 
-// ceil returns the smallest integer greater than or equal to n
+// ceil returns the smallest integer >= n
 export function ceil(n) {
-  const t = trunc(n)
-  return t === n ? n : (n > 0 ? t + 1 : t)
+  const f = frac(n)
+  return f === 0 ? n : (n > 0 ? n - f + 1 : n - f)
 }
 
 // round returns the nearest integer
 export function round(n) {
-  const t = trunc(n)
-  const d = n - t
-
+  const f = frac(n)
   if (n >= 0) {
-    return d >= 0.5 ? t + 1 : t
+    return f >= 0.5 ? n - f + 1 : n - f
   }
-  return d <= -0.5 ? t - 1 : t
+  return f <= -0.5 ? n - f - 1 : n - f
 }
 
 
