@@ -4,50 +4,22 @@
 
 // trunc removes the decimal part and keeps only the integer part
 export function trunc(n) {
-  // moves toward zero by stepping 1 at a time
-  let t = 0
-
-  if (n > 0) {
-    // count up until the next step would be bigger than n
-    while (t + 1 <= n) {
-      t = t + 1
-    }
-  } else if (n < 0) {
-    // count down until the next step would be smaller than n
-    while (t - 1 >= n) {
-      t = t - 1
-    }
+  if (n < 0) {
+    return -((0 - n) - ((0 - n) % 1))
   }
-
-  return t
+  return n - (n % 1)
 }
 
 // floor returns the largest integer less than or equal to n
 export function floor(n) {
   const t = trunc(n)
-
-  // if already an integer, return it
-  if (t === n) {
-    return n
-  }
-
-  // positive: trunc is already floor
-  // negative: floor is one less than trunc
-  return n > 0 ? t : t - 1
+  return t === n ? n : (n < 0 ? t - 1 : t)
 }
 
 // ceil returns the smallest integer greater than or equal to n
 export function ceil(n) {
   const t = trunc(n)
-
-  // if already an integer, return it
-  if (t === n) {
-    return n
-  }
-
-  // positive: ceil is one more than trunc
-  // negative: trunc is already ceil
-  return n > 0 ? t + 1 : t
+  return t === n ? n : (n > 0 ? t + 1 : t)
 }
 
 // round returns the nearest integer
@@ -55,14 +27,12 @@ export function round(n) {
   const t = trunc(n)
   const decimal = n - t
 
-  // positive numbers: .5 rounds up
   if (n >= 0) {
     return decimal >= 0.5 ? t + 1 : t
   }
-
-  // negative numbers: -.5 rounds down (toward -∞)
   return decimal <= -0.5 ? t - 1 : t
 }
+
 
 
 /*
