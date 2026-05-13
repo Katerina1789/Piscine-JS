@@ -1,13 +1,9 @@
 // Rounding means moving a number to the nearest integer depending on its decimal part
 // Using Math.round(), Math.floor(), Math.ceil(), Math.trunc() isn't allowed but they would look like this: return Math.round(n), return Math.floor(n), return Math.ceil(n), return Math.trunc(n)
 
-
 // trunc removes the decimal part and keeps only the integer part
 export function trunc(n) {
-  if (n < 0) {
-    return -((0 - n) - ((0 - n) % 1))
-  }
-  return n - (n % 1)
+  return parseInt(n)
 }
 
 // floor returns the largest integer less than or equal to n
@@ -25,14 +21,13 @@ export function ceil(n) {
 // round returns the nearest integer
 export function round(n) {
   const t = trunc(n)
-  const decimal = n - t
+  const d = n - t
 
   if (n >= 0) {
-    return decimal >= 0.5 ? t + 1 : t
+    return d >= 0.5 ? t + 1 : t
   }
-  return decimal <= -0.5 ? t - 1 : t
+  return d <= -0.5 ? t - 1 : t
 }
-
 
 
 /*
