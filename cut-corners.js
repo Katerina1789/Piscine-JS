@@ -1,19 +1,24 @@
 export function trunc(n) {
   if (Number.isNaN(n)) return NaN
-
-  if (n === Infinity) return Infinity
-  if (n === -Infinity) return -Infinity
+  if (n === Infinity || n === -Infinity) return n
 
   const s = Math.sign(n)
   let a = Math.abs(n)
 
-  let i = 0
-  while (i + 1 <= a) {
-    i += 1
+  // Try to eliminate decimals by scaling
+  let factor = 1
+  for (let i = 0; i < 15; i++) {
+    const scaled = a * factor
+    if (scaled === Math.floor(scaled)) {
+      return s * (scaled / factor)
+    }
+    factor *= 10
   }
 
-  return s * i
+  // fallback (should never happen)
+  return s * a
 }
+
 
 export function ceil(n) {
   const t = trunc(n)
