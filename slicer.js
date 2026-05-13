@@ -1,3 +1,35 @@
+/*
+  CONTROL FLOW & VARIABLES DICTIONARY OF JavaScript
+
+  let:
+    - Declares a variable whose value can change over time.
+    - Used when you need to store information that will be updated.
+    - Block‑scoped (only exists inside the nearest { }).
+    - Commonly used for counters, accumulators, or temporary values.
+    - Example: let count = 0
+
+  if:
+    - Runs code only when a condition is true.
+    - Used for making decisions: choosing one path or another.
+    - Does not repeat; it executes once when the condition is met.
+    - Can be extended with else or else if for multiple branches.
+    - Example:
+        if (x > 10) {
+          console.log('big number')
+        }
+
+  while:
+    - Repeats code as long as a condition stays true.
+    - Used for loops where you don’t know the number of repetitions in advance.
+    - Requires a variable that changes inside the loop to avoid infinite loops.
+    - Often used with counters or when scanning through data.
+    - Example:
+        let i = 0
+        while (i < 5) {
+          i = i + 1
+        }
+*/
+
 // Slicing means copying elements from start to end into a new array or string
 // Using slice() isn't allowed but it would look like this: return value.slice(start, end)
 
