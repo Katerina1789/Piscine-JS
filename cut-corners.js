@@ -1,60 +1,56 @@
-function toInt32(n) {
-  // Handle NaN and infinities
+function intPartTowardZero(n) {
   if (Number.isNaN(n)) return NaN
   if (n === Infinity || n === -Infinity) return n
 
-  // Step 1: truncate toward zero without forbidden ops
   const sign = n < 0 ? -1 : 1
   let a = n * sign
 
-  // shrink until small enough
-  while (a > 1e12) a /= 2
+  if (a < 1) return 0 * sign
 
-  // extract integer part safely (max ~12 iterations)
-  let i = 0
-  while (i + 1 <= a) i += 1
-  let t = i * sign
+  // find highest power of 2 <= a
+  let p = 1
+  while (p * 2 <= a) {
+    p *= 2
+  }
 
-  // Step 2: simulate 32-bit wrapping (~~n behavior)
-  const TWO32 = 4294967296      // 2^32
-  const TWO31 = 2147483648      // 2^31
+  // build integer part using binary decomposition
+  let r = 0
+  while (p >= 1) {
+    if (a >= p) {
+      a -= p
+      r += p
+    }
+    p /= 2
+  }
 
-  // bring into unsigned 32-bit range without %
-  while (t >= TWO32) t -= TWO32
-  while (t < 0) t += TWO32
-
-  // convert to signed 32-bit
-  if (t >= TWO31) t -= TWO32
-
-  return t
+  return r * sign
 }
 
 export function trunc(n) {
-  return toInt32(n)
+  return intPartTowardZero(n)
 }
 
 export function floor(n) {
-  const t = toInt32(n)
+  const t = intPartTowardZero(n)
   if (Number.isNaN(t)) return NaN
   if (n === t) return t
   return n < 0 ? t - 1 : t
 }
 
 export function ceil(n) {
-  const t = toInt32(n)
+  const t = intPartTowardZero(n)
   if (Number.isNaN(t)) return NaN
   if (n === t) return t
   return n > 0 ? t + 1 : t
 }
 
 export function round(n) {
-  const t = toInt32(n)
+  const t = intPartTowardZero(n)
   if (Number.isNaN(t)) return NaN
   const d = n - t
   if (n >= 0) return d >= 0.5 ? t + 1 : t
   return d <= -0.5 ? t - 1 : t
 }
-
 
 
 /*
