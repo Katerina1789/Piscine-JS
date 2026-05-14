@@ -1,57 +1,58 @@
-export function trunc(n) {
+function toInt32(n) {
+  // Handle NaN and infinities
   if (Number.isNaN(n)) return NaN
   if (n === Infinity || n === -Infinity) return n
 
+  // Step 1: truncate toward zero without forbidden ops
   const sign = n < 0 ? -1 : 1
   let a = n * sign
 
-  // shrink the number until it's small enough
-  let factor = 1
-  while (a > 10) {
-    a /= 10
-    factor *= 10
-  }
+  // shrink until small enough
+  while (a > 1e12) a /= 2
 
-  // now extract integer part safely (max 10 iterations)
+  // extract integer part safely (max ~12 iterations)
   let i = 0
-  while (i + 1 <= a) {
-    i += 1
-  }
+  while (i + 1 <= a) i += 1
+  let t = i * sign
 
-  // scale back up
-  return i * factor * sign
+  // Step 2: simulate 32-bit wrapping (~~n behavior)
+  const TWO32 = 4294967296      // 2^32
+  const TWO31 = 2147483648      // 2^31
+
+  // bring into unsigned 32-bit range without %
+  while (t >= TWO32) t -= TWO32
+  while (t < 0) t += TWO32
+
+  // convert to signed 32-bit
+  if (t >= TWO31) t -= TWO32
+
+  return t
 }
 
-export function round(n) {
-  if (Number.isNaN(n)) return NaN
-  if (n === Infinity || n === -Infinity) return n
-
-  const t = trunc(n)
-  const d = n - t
-
-  if (n >= 0) {
-    return d >= 0.5 ? t + 1 : t
-  } else {
-    return d <= -0.5 ? t - 1 : t
-  }
-}
-
-export function ceil(n) {
-  if (Number.isNaN(n)) return NaN
-  if (n === Infinity || n === -Infinity) return n
-
-  const t = trunc(n)
-  if (n === t) return n
-  return n > 0 ? t + 1 : t
+export function trunc(n) {
+  return toInt32(n)
 }
 
 export function floor(n) {
-  if (Number.isNaN(n)) return NaN
-  if (n === Infinity || n === -Infinity) return n
-
-  const t = trunc(n)
-  if (n === t) return n
+  const t = toInt32(n)
+  if (Number.isNaN(t)) return NaN
+  if (n === t) return t
   return n < 0 ? t - 1 : t
+}
+
+export function ceil(n) {
+  const t = toInt32(n)
+  if (Number.isNaN(t)) return NaN
+  if (n === t) return t
+  return n > 0 ? t + 1 : t
+}
+
+export function round(n) {
+  const t = toInt32(n)
+  if (Number.isNaN(t)) return NaN
+  const d = n - t
+  if (n >= 0) return d >= 0.5 ? t + 1 : t
+  return d <= -0.5 ? t - 1 : t
 }
 
 
