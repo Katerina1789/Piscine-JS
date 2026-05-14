@@ -18,23 +18,30 @@ export function round(n) {
   }
 }
 
-export function ceil(n) {
+export function trunc(n) {
   if (Number.isNaN(n)) return NaN
   if (n === Infinity || n === -Infinity) return n
 
-  const t = trunc(n)
-  if (n === t) return n
-  return n > 0 ? t + 1 : t
+  const sign = n < 0 ? -1 : 1
+  let a = n * sign
+
+  // shrink the number until it's small enough
+  let factor = 1
+  while (a > 10) {
+    a /= 10
+    factor *= 10
+  }
+
+  // now extract integer part safely (max 10 iterations)
+  let i = 0
+  while (i + 1 <= a) {
+    i += 1
+  }
+
+  // scale back up
+  return i * factor * sign
 }
 
-export function floor(n) {
-  if (Number.isNaN(n)) return NaN
-  if (n === Infinity || n === -Infinity) return n
-
-  const t = trunc(n)
-  if (n === t) return n
-  return n < 0 ? t - 1 : t
-}
 
 
 
