@@ -1,26 +1,6 @@
 export function trunc(n) {
   if (Number.isNaN(n)) return NaN
   if (n === Infinity || n === -Infinity) return n
-  return parseInt(n)
-}
-
-export function round(n) {
-  if (Number.isNaN(n)) return NaN
-  if (n === Infinity || n === -Infinity) return n
-
-  const t = trunc(n)
-  const d = n - t
-
-  if (n >= 0) {
-    return d >= 0.5 ? t + 1 : t
-  } else {
-    return d <= -0.5 ? t - 1 : t
-  }
-}
-
-export function trunc(n) {
-  if (Number.isNaN(n)) return NaN
-  if (n === Infinity || n === -Infinity) return n
 
   const sign = n < 0 ? -1 : 1
   let a = n * sign
@@ -42,6 +22,37 @@ export function trunc(n) {
   return i * factor * sign
 }
 
+export function round(n) {
+  if (Number.isNaN(n)) return NaN
+  if (n === Infinity || n === -Infinity) return n
+
+  const t = trunc(n)
+  const d = n - t
+
+  if (n >= 0) {
+    return d >= 0.5 ? t + 1 : t
+  } else {
+    return d <= -0.5 ? t - 1 : t
+  }
+}
+
+export function ceil(n) {
+  if (Number.isNaN(n)) return NaN
+  if (n === Infinity || n === -Infinity) return n
+
+  const t = trunc(n)
+  if (n === t) return n
+  return n > 0 ? t + 1 : t
+}
+
+export function floor(n) {
+  if (Number.isNaN(n)) return NaN
+  if (n === Infinity || n === -Infinity) return n
+
+  const t = trunc(n)
+  if (n === t) return n
+  return n < 0 ? t - 1 : t
+}
 
 
 
