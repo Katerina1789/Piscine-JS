@@ -9,7 +9,7 @@ This repository contains my work from the JS Piscine at Zone01 — a challenging
 
 ```
 📁 DATA/            // JS basics: data types, variables, functions, objects, arrays, basic logic and mathematical operations
-📁 LOOP/            // 
+📁 LOOP/            // while, recursion, if, let, Array., Math., String.
 📁 FIND/            // 
 📁 TIME/            // 
 📁 CALL-ME-MAYBE/   // 
