@@ -12,7 +12,10 @@ export function sums(n) {
   function build(remaining, start, current) {
     // if we reached exactly 0, we found a valid partition
     if (remaining === 0) {
-      out.push(current)
+      // only keep partitions with at least two numbers
+      if (current.length > 1) {
+        out.push(current)
+      }
       return
     }
 
