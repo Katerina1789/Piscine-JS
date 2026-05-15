@@ -2,8 +2,10 @@
 // To avoid duplicates like [1,3] and [3,1], we only build partitions in non-decreasing order
 // We use recursion to explore all valid next numbers
 
-
 export function sums(n) {
+  // for 0 or negative, there are no partitions
+  if (n <= 0) return []
+
   const out = []
 
   // helper builds partitions starting from "start" to keep order non-decreasing
