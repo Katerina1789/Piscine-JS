@@ -1,37 +1,38 @@
-// Flattening an array means removing one level of nesting
-// Using Array.concat() is the simplest way to flatten one level
-// Remember: only flatten ONE level, not deep flattening
+// Flattening means removing one level of nesting each time
+// We repeat the flattening process "depth" times
+// Remember: only flatten deeper if depth > 0
 
 
-// flat returns a new array with one level of nesting removed
-export function flat(arr) {
-  // starts with an empty array
-  let out = []
+export function flat(arr, depth = 1) {
+  let out = arr
 
-  // loops through each element
-  let i = 0
-  while (i < arr.length) {
-    const el = arr[i]
+  // repeat flattening "depth" times
+  let d = 0
+  while (d < depth) {
+    let temp = []
+    let i = 0
 
-    // if element is an array, spread its items
-    if (Array.isArray(el)) {
-      out = out.concat(el)
-    } else {
-      // otherwise push the element itself
-      out.push(el)
+    // flatten ONE level
+    while (i < out.length) {
+      const el = out[i]
+      if (Array.isArray(el)) {
+        temp = temp.concat(el)
+      } else {
+        temp.push(el)
+      }
+      i++
     }
 
-    i++
+    out = temp
+    d++
   }
 
-  // returns the flattened array
   return out
 }
 
 
 /*
 TESTING:
-
 console.log('--- basic tests ---')
 console.log(flat([1, [2], 3]))          // [1, 2, 3]
 console.log(flat([[1, 2], [3, 4]]))     // [1, 2, 3, 4]
