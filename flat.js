@@ -1,27 +1,38 @@
 // Flattening means removing one level of nesting each time
-// If depth is 0, return the array as-is
-// If depth > 0, flatten one level and recurse
+// If depth is Infinity, we flatten until no nested arrays remain
+// Otherwise, we flatten exactly "depth" levels
 
 
 export function flat(arr, depth = 1) {
-  if (depth <= 0) return arr
+  let out = arr
+  let d = 0
 
-  let out = []
-  let i = 0
+  // loop until depth reached OR no nested arrays remain
+  while (d < depth) {
+    let temp = []
+    let changed = false
+    let i = 0
 
-  // flatten ONE level
-  while (i < arr.length) {
-    const el = arr[i]
-    if (Array.isArray(el)) {
-      out = out.concat(el)
-    } else {
-      out.push(el)
+    // flatten ONE level
+    while (i < out.length) {
+      const el = out[i]
+      if (Array.isArray(el)) {
+        temp = temp.concat(el)
+        changed = true
+      } else {
+        temp.push(el)
+      }
+      i++
     }
-    i++
+
+    out = temp
+    d++
+
+    // if nothing was flattened, stop early (important for Infinity)
+    if (!changed) break
   }
 
-  // recursively flatten deeper levels
-  return flat(out, depth - 1)
+  return out
 }
 
 
