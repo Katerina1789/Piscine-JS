@@ -3,8 +3,8 @@
 // We use recursion to explore all valid next numbers
 
 export function sums(n) {
-  // for 0 or negative, there are no partitions
-  if (n <= 0) return []
+  // for 1 or less, there are no partitions
+  if (n <= 1) return []
 
   const out = []
 
