@@ -10,7 +10,8 @@ export function pyramid(char, height) {
 
   // maps each row number to its pyramid line
   const lines = rows.map(n => {
-    const spaces = ' '.repeat(height - n)
+    const padSize = (height - n) * char.length
+    const spaces = ' '.repeat(padSize)
     const chars = char.repeat(2 * n - 1)
     return spaces + chars
   })
