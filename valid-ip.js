@@ -62,10 +62,10 @@ export function findIP(str) {
 
   // Reject inside http:// or https://
   // Reject if followed by '/'
-  const re = new RegExp(
-    `(?<!https?:\\/\\/)\\b${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?\\b(?!\\/)`,
-    'g'
-  )
+const re = new RegExp(
+  `(?<![A-Za-z0-9_/:])${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?(?![A-Za-z0-9_/:])`,
+  'g'
+)
 
   const out = []
   let m
