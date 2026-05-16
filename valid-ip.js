@@ -59,6 +59,7 @@
  ------------------------------------------------------------
 */
 
+// findIP: returns all valid IPv4 addresses (with optional port)
 export function findIP(str) {
   // regex for IPv4 with optional port
   const octet = '(25[0-5]|2[0-4]\\d|1?\\d?\\d)'
