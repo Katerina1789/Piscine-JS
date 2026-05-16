@@ -60,11 +60,48 @@
 */
 
 
+/*
+  REGEX DICTIONARY FOR VALID IP MATCHING
+
+  IPv4 Octet (0–255, no leading zeros):
+    - 25[0-5]       → matches 250–255
+    - 2[0-4]\d      → matches 200–249
+    - 1\d\d         → matches 100–199
+    - [1-9]\d?      → matches 1–99 (no leading zero)
+    - 0             → matches 0
+    - Combined:
+        (25[0-5]|2[0-4]\d|1\d\d|[1-9]\d?|0)
+
+  Word Boundaries:
+    - \b ensures we match whole tokens, not inside bigger numbers.
+    - Example: \b192\b matches "192" but not "1192" or "1923".
+
+  Optional Group:
+    - ( ... )? makes a group optional.
+    - Example: /a(bc)?/ matches "a" or "abc".
+
+  Ports (0–65535):
+    - :\d{1,5} matches ":" followed by 1–5 digits.
+    - Must manually validate ≤ 65535.
+    - Example valid: 22, 8080, 65535
+    - Example invalid: 70000
+
+  Full IP With Optional Port:
+    <octet>.<octet>.<octet>.<octet>(:<port>)?
+    Example matches:
+      - 233.123.12.234
+      - 192.168.1.123:8080
+      - 192.169.1.23
+      - 10.1.23.7
+      - 0.0.0.0:22
+*/
+
+
 // findIP: returns all valid IPv4 addresses (with optional port)
 export function findIP(str) {
-  const octet = '(25[0-5]|2[0-4]\\d|[01]?\\d?\\d)'
+  const octet = '(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d?|0)'
   const re = new RegExp(
-    `(?<!//)${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?(?!/)`,
+    `\\b${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?\\b`,
     'g',
   )
 
