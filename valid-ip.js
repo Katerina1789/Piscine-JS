@@ -1,121 +1,121 @@
 /*
- ------------------------------------------------------------
- REGEX DICTIONARY (MINIMAL + ORGANIZED + WITH EXAMPLES)
- ------------------------------------------------------------
+============================================================
+ REGEX THEORY (for understanding, even though we use logic)
+============================================================
 
- • Character Classes: [0-9], [A-Za-z], [.]  
-   - Match any one character inside brackets.  
-   - Example: /[0-9]/ matches "4".
+ • Character classes: [0-9], [A-Za-z], [.]
+   - Match any one character inside brackets.
 
- • Quantifiers: +, *, ?, {n,m}  
-   - {1,3} means 1 to 3 repetitions.  
-   - Example: /\d{1,3}/ matches "1", "25", "255".
+ • Quantifiers: +, *, ?, {n,m}
+   - {1,3} means 1 to 3 repetitions.
 
- • Anchors: ^ and $  
-   - ^ start of string, $ end of string.  
-   - Example: /^abc$/ matches ONLY "abc".
+ • Anchors: ^ and $
+   - ^ start of string, $ end of string.
 
- • Groups: (...)  
-   - Capture parts of the match.  
-   - Example: /(abc)(\d+)/ matches "abc42".
+ • Groups: (...)
+   - Capture or group parts of a pattern.
 
- • Alternation: |  
-   - OR between patterns.  
-   - Example: /(cat|dog)/ matches "cat" or "dog".
+ • Alternation: |
+   - OR between patterns.
 
- • Lookarounds: (?=...), (?!...), (?<=...), (?<!...)  
-   - Check context without consuming characters.  
-   - Example: /\d+(?=px)/ matches "12" in "12px".
+ • Lookarounds: (?=...), (?!...), (?<=...), (?<!...)
+   - Check context without consuming characters.
 
- /*
-  VALID IPv4 RULES (LOGIC-BASED, NO REGEX TRICKS)
-
-  - IP format: x.x.x.x
-  - Each x: 0–255
-  - "0" is allowed
-  - Leading zeros are NOT allowed: "01", "001", "09" → invalid
-
-  - Optional port: :number
-  - Port: 0–65535
+We are NOT using regex for validation here.
+We use **pure logic** to validate:
+   - IPv4 host (x.x.x.x)
+   - Optional port (:number)
+============================================================
 */
 
-function isValidOctet(o) {
-  if (o.length === 0) return false
-  if (o === '0') return true
-  if (o[0] === '0') return false
-  for (let i = 0; i < o.length; i++) {
-    const c = o[i]
-    if (c < '0' || c > '9') return false
-  }
-  const n = Number(o)
-  return n >= 0 && n <= 255
-}
-
-function isValidPort(p) {
-  if (p.length === 0 || p.length > 5) return false
-  for (let i = 0; i < p.length; i++) {
-    const c = p[i]
-    if (c < '0' || c > '9') return false
-  }
-  const n = Number(p)
-  return n >= 0 && n <= 65535
-}
-
-function isValidIPToken(token) {
-  // hard‑exclude this one because the test expects it to be invalid
-  if (token === '92.168.1.123') return false
-
-  let ipPart = token
-  let portPart = null
-
-  const colonIndex = token.indexOf(':')
-  if (colonIndex !== -1) {
-    ipPart = token.slice(0, colonIndex)
-    portPart = token.slice(colonIndex + 1)
-    if (token.indexOf(':', colonIndex + 1) !== -1) return false
-  }
-
-  const octets = ipPart.split('.')
-  if (octets.length !== 4) return false
-
-  for (let i = 0; i < octets.length; i++) {
-    if (!isValidOctet(octets[i])) return false
-  }
-
-  if (portPart !== null) {
-    if (!isValidPort(portPart)) return false
-  }
-
-  return true
-}
 
 export function findIP(str) {
-  const out = []
-  let current = ''
 
+  // Validate a single IPv4 octet (0–255, no leading zeros)
+  function isValidOctet(o) {
+    if (o === "0") return true               // "0" allowed
+    if (o.length === 0) return false         // empty not allowed
+    if (o[0] === "0") return false           // no leading zeros
+
+    // must be digits only
+    for (let i = 0; i < o.length; i++) {
+      const c = o[i]
+      if (c < "0" || c > "9") return false
+    }
+
+    const n = Number(o)
+    return n >= 0 && n <= 255
+  }
+
+  // Validate port (0–65535)
+  function isValidPort(p) {
+    if (p.length === 0 || p.length > 5) return false
+
+    // digits only
+    for (let i = 0; i < p.length; i++) {
+      const c = p[i]
+      if (c < "0" || c > "9") return false
+    }
+
+    const n = Number(p)
+    return n >= 0 && n <= 65535
+  }
+
+  // Validate full token: host or host:port
+  function isValidIPToken(token) {
+    let host = token
+    let port = null
+
+    // split host:port
+    const idx = token.indexOf(":")
+    if (idx !== -1) {
+      host = token.slice(0, idx)
+      port = token.slice(idx + 1)
+
+      // more than one colon → invalid
+      if (token.indexOf(":", idx + 1) !== -1) return false
+    }
+
+    // split host into 4 octets
+    const octets = host.split(".")
+    if (octets.length !== 4) return false
+
+    // validate each octet
+    for (const o of octets) {
+      if (!isValidOctet(o)) return false
+    }
+
+    // validate port if present
+    if (port !== null) {
+      if (!isValidPort(port)) return false
+    }
+
+    return true
+  }
+
+  // MAIN FLOW: extract tokens and validate them
+  const out = []
+  let current = ""
+
+  // Build tokens from digits, dots, and colons
   for (let i = 0; i < str.length; i++) {
     const c = str[i]
-    if (
-      (c >= '0' && c <= '9') ||
-      c === '.' ||
-      c === ':'
-    ) {
+
+    if ((c >= "0" && c <= "9") || c === "." || c === ":") {
       current += c
     } else {
-      if (current.length > 0) {
-        if (isValidIPToken(current)) {
-          out.push(current)
-        }
-        current = ''
+      // validate completed token
+      if (current.length > 0 && isValidIPToken(current)) {
+        out.push(current)
       }
+      current = ""
     }
   }
 
+  // flush last token
   if (current.length > 0 && isValidIPToken(current)) {
     out.push(current)
   }
 
   return out
 }
-
-
