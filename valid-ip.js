@@ -97,12 +97,13 @@
 */
 
 
-// findIP: returns all valid IPv4 addresses (with optional port)
 export function findIP(str) {
   const octet = '(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d?|0)'
+
+  // Reject IPs inside http:// or https://
   const re = new RegExp(
-    `\\b${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?\\b`,
-    'g',
+    `(?<!https?:\\/\\/)\\b${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?\\b`,
+    'g'
   )
 
   const out = []
@@ -123,29 +124,3 @@ export function findIP(str) {
 
   return out
 }
-
-
-/*
-TESTING:
-console.log('--- basic valid IPs ---')
-console.log(findIP('ping 192.168.1.1 now'))
-// ['192.168.1.1']
-
-console.log('--- with ports ---')
-console.log(findIP('server at 10.0.0.1:8080 and backup at 8.8.8.8:53'))
-// ['10.0.0.1:8080', '8.8.8.8:53']
-
-console.log('--- invalid octets ---')
-console.log(findIP('bad: 256.1.1.1, 999.0.0.1, 01.2.3.4'))
-// []
-
-console.log('--- invalid ports ---')
-console.log(findIP('ip 1.2.3.4:70000'))
-// []
-
-console.log('--- mixed ---')
-console.log(findIP('ok 127.0.0.1, nope 127.0.0.1:99999, ok 8.8.4.4:443'))
-// ['127.0.0.1', '8.8.4.4:443']
-
-run in Terminal: node valid-ip.js
-*/
