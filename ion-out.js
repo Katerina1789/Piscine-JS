@@ -4,17 +4,15 @@
 
 // ionOut: returns words containing 'tion', but without the 'ion' part
 export function ionOut(str) {
-  // match whole words that contain 'tion'
-  const re = /\b(\w*?)tion(\w*)\b/g
+  // (\w*?t) captures up to and including 't', then 'ion', then the rest of the word
+  const re = /\b(\w*?t)ion(\w*)\b/g
 
-  // extract matches
   const out = []
   let m
 
   // loop through all matches
   while ((m = re.exec(str)) !== null) {
-    // m[1] = before 'tion'
-    // m[2] = after 'tion'
+    // m[1] = up to 't', m[2] = after 'ion'
     out.push(m[1] + m[2])
   }
 
