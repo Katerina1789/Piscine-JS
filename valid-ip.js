@@ -59,11 +59,14 @@
  ------------------------------------------------------------
 */
 
+
 // findIP: returns all valid IPv4 addresses (with optional port)
 export function findIP(str) {
-  // regex for IPv4 with optional port
-  const octet = '(25[0-5]|2[0-4]\\d|1?\\d?\\d)'
-  const re = new RegExp(`\\b${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?\\b`, 'g')
+  const octet = '(25[0-5]|2[0-4]\\d|[01]?\\d?\\d)'
+  const re = new RegExp(
+    `(?<!//)${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?(?!/)`,
+    'g',
+  )
 
   const out = []
   let m
@@ -71,7 +74,7 @@ export function findIP(str) {
   while ((m = re.exec(str)) !== null) {
     const ip = m[0]
 
-    // if port exists, validate numeric range
+    // validate port if present
     const parts = ip.split(':')
     if (parts.length === 2) {
       const port = Number(parts[1])
