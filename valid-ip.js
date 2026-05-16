@@ -119,3 +119,47 @@ export function findIP(str) {
 
   return out
 }
+
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const dataSet = `
+233.123.12.234
+http://192.168.1.123:8080
+192.169.1.23
+172.01.123.254:1234
+10.1.23.7
+255.255.255.000
+09.09.09.09
+0.0.0.0:22
+https://255.253.123.2:8000
+192.168.1.123
+0.0.0.0/0
+921.168.1.123
+  `
+
+  const expected = [
+    '233.123.12.234',
+    '192.168.1.123:8080',
+    '192.169.1.23',
+    '10.1.23.7',
+    '0.0.0.0:22',
+    '255.253.123.2:8000',
+    '192.168.1.123',
+    '0.0.0.0'
+  ]
+
+  const actual = findIP(dataSet)
+
+  console.log('Actual:', actual)
+  console.log('Expected:', expected)
+
+  const pass = JSON.stringify(actual) === JSON.stringify(expected)
+
+  if (pass) {
+    console.log('\n✅ TEST PASSED — Output matches expected!')
+  } else {
+    console.log('\n❌ TEST FAILED — Output does NOT match expected.')
+    console.log('\nMissing from actual:', expected.filter(x => !actual.includes(x)))
+    console.log('Extra in actual:', actual.filter(x => !expected.includes(x)))
+  }
+}
