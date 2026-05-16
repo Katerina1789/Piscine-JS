@@ -1,11 +1,11 @@
-// regex: currency letters + digits + '.' + digits
-// without regex we would manually scan characters and slice around the dot
-// good to remember: capturing groups let us extract sub‑parts cleanly
+// regex: optional currency symbol/letters + digits + '.' + digits
+// without regex we would scan characters and slice around the dot
+// good to remember: optional group (...)?: matches when present, skips when absent
 
 // groupPrice: finds all prices and returns [full, integer, decimal] for each
 export function groupPrice(str) {
-  // capture: (currency)(integer)(decimal)
-  const re = /([A-Za-z]+)(\d+)\.(\d+)/g
+  // ([$A-Za-z]+)? optional currency, (\d+) integer, (\d+) decimal
+  const re = /([$A-Za-z]+)?(\d+)\.(\d+)/g
 
   const out = []
   let m
@@ -22,22 +22,19 @@ export function groupPrice(str) {
 
 /*
 TESTING:
-console.log('--- provided example ---')
+console.log('--- given examples ---')
 console.log(groupPrice('Given price of USD12.31:'))
 // [["USD12.31", "12", "31"]]
+console.log(groupPrice('The price of the cereals is $4.00.'))
+// [["$4.00", "4", "00"]]
 
 console.log('--- multiple prices ---')
-console.log(groupPrice('EUR9.99 and GBP100.05 and USD0.30'))
-// [["EUR9.99","9","99"], ["GBP100.05","100","05"], ["USD0.30","0","30"]]
+console.log(groupPrice('EUR9.99 and $100.05 and 0.30'))
+// [["EUR9.99","9","99"], ["$100.05","100","05"], ["0.30","0","30"]]
 
 console.log('--- edge cases ---')
-console.log(groupPrice('no prices here'))     // []
-console.log(groupPrice('USD12'))              // [] (no decimal part)
-console.log(groupPrice('usd12.31'))           // [["usd12.31","12","31"]] (lowercase allowed)
-
-console.log('--- punctuation ---')
-console.log(groupPrice('Price: JPY500.00, tax: CAD3.50.'))
-// [["JPY500.00","500","00"], ["CAD3.50","3","50"]]
+console.log(groupPrice('no prices here'))   // []
+console.log(groupPrice('USD12'))            // [] (no decimal part)
 
 run in Terminal: node group-price.js
 */
