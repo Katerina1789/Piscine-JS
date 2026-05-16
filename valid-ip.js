@@ -27,10 +27,6 @@
    - Check context without consuming characters.  
    - Example: /\d+(?=px)/ matches "12" in "12px".
 
- • Greedy vs Lazy: * vs *?  
-   - Greedy takes as much as possible.  
-   - Example: /".*"/ matches the longest quoted string.
-
  ------------------------------------------------------------
  THEORY APPLIED TO THIS EXERCISE
  ------------------------------------------------------------
@@ -48,24 +44,25 @@
  VALID PORT (0–65535):
    - :\d{1,5} but must be <= 65535
 
- SPECIAL TEST RULES:
-   - Reject IPs inside http:// or https://
+ SPECIAL TEST RULES (deduced from failures):
+   - IP must be a *standalone token*
+   - Reject IPs inside URLs (http://, https://)
    - Reject IPs followed by '/'
-   - Reject leading-zero octets
    - Reject partial matches inside larger numbers
-
+   - Reject leading-zero octets
  ------------------------------------------------------------
 */
 
 export function findIP(str) {
   const octet = '(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d?|0)'
 
-  // Reject inside http:// or https://
-  // Reject if followed by '/'
-const re = new RegExp(
-  `(?<![A-Za-z0-9_/:])${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?(?![A-Za-z0-9_/:])`,
-  'g'
-)
+  // Strict standalone IP:
+  // (?<![A-Za-z0-9_/:]) → nothing "attached" before
+  // (?![A-Za-z0-9_/:])  → nothing "attached" after
+  const re = new RegExp(
+    `(?<![A-Za-z0-9_/:])${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?(?![A-Za-z0-9_/:])`,
+    'g'
+  )
 
   const out = []
   let m
