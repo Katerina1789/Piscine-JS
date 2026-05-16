@@ -100,9 +100,10 @@
 export function findIP(str) {
   const octet = '(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d?|0)'
 
-  // Reject IPs inside http:// or https://
+  // Reject inside http:// or https://
+  // Reject if followed by "/"
   const re = new RegExp(
-    `(?<!https?:\\/\\/)\\b${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?\\b`,
+    `(?<!https?:\\/\\/)\\b${octet}\\.${octet}\\.${octet}\\.${octet}(?::\\d{1,5})?\\b(?!\\/)`,
     'g'
   )
 
