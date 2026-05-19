@@ -7,11 +7,11 @@
 
 // isValid returns false if the given Date is invalid
 function isValid(date) {
-  // if date is a number (e.g. Date.now()), it is valid by definition
-  if (typeof date === 'number') return true;
-  // instanceof checks it is actually a Date object (rejects plain strings, empty strings etc.)
-  // isNaN catches invalid Dates like new Date('banana') which hold NaN as their value
-  return date instanceof Date && !isNaN(date);
+  // if date is a number and not NaN (e.g. Date.now()), it is valid
+  if (typeof date === 'number' && !isNaN(date)) return true;
+  // if date is a Date object and not NaN (e.g. new Date('banana')), it is valid
+  if (date instanceof Date && !isNaN(date)) return true;
+  return false;
 }
 
 // isAfter returns true if the first date is greater than the second
