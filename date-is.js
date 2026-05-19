@@ -1,12 +1,14 @@
 // Comparison operators (<, >): compare two values and return a boolean
 // isNaN(): returns true if a value is NaN (Not a Number), used to detect invalid Dates
 // Date comparison: Date objects can be compared with < and > as they convert to milliseconds
+// instanceof: checks if a value is an instance of a specific type (e.g. Date)
 // Date.now(): returns the current time in milliseconds since the Unix epoch
 
 // isValid returns false if the given Date is invalid
 function isValid(date) {
-  // An invalid Date (e.g. new Date('banana')) converts to NaN, isNaN catches it
-  return !isNaN(date);
+  // instanceof checks it is actually a Date object (rejects plain strings, empty strings etc.)
+  // isNaN catches invalid Dates like new Date('banana') which hold NaN as their value
+  return date instanceof Date && !isNaN(date);
 }
 
 // isAfter returns true if the first date is greater than the second
