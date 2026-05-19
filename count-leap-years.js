@@ -8,8 +8,8 @@ function countLeapYears(date) {
   const year = date.getFullYear();
   let count = 0;
 
-  // Loop from year 1 to the given year, incrementing count for each leap year
-  for (let i = 1; i <= year; i++) {
+  // Loop from year 1 to the year before the given year, incrementing count for each leap year
+  for (let i = 1; i < year; i++) {
     // Divisible by 400: always a leap year
     // Divisible by 100 but not 400: not a leap year
     // Divisible by 4 but not 100: leap year
