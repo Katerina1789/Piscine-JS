@@ -11,7 +11,7 @@ This repository contains my work from the JS Piscine at Zone01 — a challenging
 📁 DATA/            // JS basics: data types, variables, functions, objects, arrays, basic logic and mathematical operations
 📁 LOOP/            // while, recursion, if, let, Array., Math., String.
 📁 FIND/            // everything RegEx
-📁 TIME/            // 
+📁 TIME/            // date and time manipulation commands and algorithms
 📁 CALL-ME-MAYBE/   // 
 📁 DOM/             // 
 📁 OBJECT/          // 
