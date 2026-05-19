@@ -9,8 +9,9 @@
 function firstDayWeek(number, year) {
   const msPerDay = 1000 * 60 * 60 * 24;
 
-  // Start from January 1st of the given year
-  const jan1 = new Date(year, 0, 1);
+  // Use setFullYear to handle ancient years correctly (new Date(year) misreads years 0-99 as 1900-1999)
+  const jan1 = new Date(0);
+  jan1.setFullYear(parseInt(year), 0, 1);
 
   // getDay() returns 0 for Sunday, 1 for Monday etc.
   // We convert so that Monday = 0, Tuesday = 1 ... Sunday = 6
