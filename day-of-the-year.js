@@ -11,14 +11,14 @@ function dayOfTheYear(date) {
 
   const msPerDay = 1000 * 60 * 60 * 24;
 
-  // Subtract jan1 from date to get milliseconds difference, divide by msPerDay to get days
-  return Math.round((date - jan1) / msPerDay);
+  // Add 1 since the count starts from 1 (January 1st = day 1, not day 0)
+  return Math.round((date - jan1) / msPerDay) + 1;
 }
 
 /*
 TESTING:
-console.log(dayOfTheYear(new Date('2020-01-01'))); // Expected: 0 (first day of the year)
-console.log(dayOfTheYear(new Date('2020-01-02'))); // Expected: 1
-console.log(dayOfTheYear(new Date('2020-12-31'))); // Expected: 365 (2020 is a leap year)
-console.log(dayOfTheYear(new Date('2019-12-31'))); // Expected: 364 (2019 is not a leap year)
+console.log(dayOfTheYear(new Date('2020-01-01'))); // Expected: 1 (first day of the year)
+console.log(dayOfTheYear(new Date('2020-01-02'))); // Expected: 2
+console.log(dayOfTheYear(new Date('2020-12-31'))); // Expected: 366 (2020 is a leap year)
+console.log(dayOfTheYear(new Date('2019-12-31'))); // Expected: 365 (2019 is not a leap year)
 */
