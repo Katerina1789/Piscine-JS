@@ -29,7 +29,7 @@ function firstDayWeek(number, year) {
   // Format the date as dd-mm-yyyy, padStart ensures single digits get a leading zero (e.g. 1 -> 01)
   const day = String(targetMonday.getDate()).padStart(2, '0');
   const month = String(targetMonday.getMonth() + 1).padStart(2, '0');
-  const fullYear = targetMonday.getFullYear();
+  const fullYear = String(targetMonday.getFullYear()).padStart(4, '0');
 
   return `${day}-${month}-${fullYear}`;
 }
