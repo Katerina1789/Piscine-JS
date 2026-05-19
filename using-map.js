@@ -37,7 +37,7 @@ function fahrenheitToCelsius(arr) {
 // trimTemp removes all spaces from the temperature strings
 function trimTemp(arr) {
   return arr.map(obj => ({
-    city: obj.city,
+    ...obj,
     temperature: obj.temperature.replace(/\s+/g, '')
   }));
 }
