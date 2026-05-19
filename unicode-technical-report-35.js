@@ -34,29 +34,29 @@ function format(date, str) {
   const eraLong = year > 0 ? 'Anno Domini' : 'Before Christ';
 
   // Map each token to its value
-  const tokens = {
-    'GGGG': eraLong,
-    'MMMM': monthsLong[month],
-    'EEEE': daysLong[weekday],
-    'yyyy': String(year).padStart(4, '0'),
-    'MMM' : monthsShort[month],
-    'HH'  : String(hours24).padStart(2, '0'),
-    'hh'  : String(hours12).padStart(2, '0'),
-    'mm'  : String(minutes).padStart(2, '0'),
-    'ss'  : String(seconds).padStart(2, '0'),
-    'dd'  : String(day).padStart(2, '0'),
-    'MM'  : String(month + 1).padStart(2, '0'),
-    'G'   : eraShort,
-    'E'   : daysShort[weekday],
-    'y'   : String(year),
-    'M'   : String(month + 1),
-    'H'   : String(hours24),
-    'h'   : String(hours12),
-    'm'   : String(minutes),
-    's'   : String(seconds),
-    'd'   : String(day),
-    'a'   : hours24 < 12 ? 'AM' : 'PM',
-  };
+const tokens = {
+  'GGGG': eraLong,
+  'MMMM': monthsLong[month],
+  'EEEE': daysLong[weekday],
+  'yyyy': String(Math.abs(year)).padStart(4, '0'),
+  'MMM' : monthsShort[month],
+  'HH'  : String(hours24).padStart(2, '0'),
+  'hh'  : String(hours12).padStart(2, '0'),
+  'mm'  : String(minutes).padStart(2, '0'),
+  'ss'  : String(seconds).padStart(2, '0'),
+  'dd'  : String(day).padStart(2, '0'),
+  'MM'  : String(month + 1).padStart(2, '0'),
+  'G'   : eraShort,
+  'E'   : daysShort[weekday],
+  'y'   : String(Math.abs(year)),
+  'M'   : String(month + 1),
+  'H'   : String(hours24),
+  'h'   : String(hours12),
+  'm'   : String(minutes),
+  's'   : String(seconds),
+  'd'   : String(day),
+  'a'   : hours24 < 12 ? 'AM' : 'PM',
+};
 
   // Match all known tokens in the format string, replace each with its value
   // The regex matches longest tokens first thanks to the | (or) order
