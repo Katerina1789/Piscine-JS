@@ -12,7 +12,7 @@ This repository contains my work from the JS Piscine at Zone01 — a challenging
 📁 LOOP/            // while, recursion, if, let, Array., Math., String.
 📁 FIND/            // everything RegEx
 📁 TIME/            // date and time manipulation commands and algorithms
-📁 CALL-ME-MAYBE/   // 
+📁 CALL-ME-MAYBE/   // Array. commands and currying
 📁 DOM/             // 
 📁 OBJECT/          // 
 📁 ASYNC/           // 
