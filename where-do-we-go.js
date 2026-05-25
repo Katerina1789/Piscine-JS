@@ -52,7 +52,7 @@ export const explore = () => {
   const updateLocation = ({ name, coordinates, color }) => {
     location.textContent = `${name}\n${coordinates}`;
     location.style.color = color;
-    location.href = `https://www.google.com/maps?q=${encodeURIComponent(coordinates)}`;
+    location.href = `https://www.google.com/maps?q=${coordinates}`;
   };
 
   // set initial location to the first (northernmost) place
