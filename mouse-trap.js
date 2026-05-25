@@ -41,32 +41,34 @@ export const moveCircle = () => {
     const circle = circles[circles.length - 1];
     const box = document.querySelector('.box');
     const boxRect = box.getBoundingClientRect();
-    const circleSize = 50;
+    const radius = 25;
 
-    // calculate boundaries: circle must be strictly inside the box walls (1px border)
-    const minX = boxRect.left + 1;
-    const minY = boxRect.top + 1;
-    const maxX = boxRect.right - circleSize - 1;
-    const maxY = boxRect.bottom - circleSize - 1;
+    // mouse position is the circle's center point
+    const cx = event.clientX;
+    const cy = event.clientY;
 
-    let x = event.clientX - 25;
-    let y = event.clientY - 25;
-
-    // check if circle is fully inside the box
-    const insideBox = x >= minX && y >= minY && x <= maxX && y <= maxY;
+    // check if circle center is strictly inside the box (accounting for 1px border)
+    const insideBox =
+      cx > boxRect.left + radius &&
+      cx < boxRect.right - radius &&
+      cy > boxRect.top + radius &&
+      cy < boxRect.bottom - radius;
 
     if (insideBox) {
-      // trap the circle: clamp its position inside the box and turn it purple
+      // turn purple once inside
       circle.style.background = 'var(--purple)';
-      circle.style.left = `${Math.min(Math.max(x, minX), maxX)}px`;
-      circle.style.top = `${Math.min(Math.max(y, minY), maxY)}px`;
+    }
 
-      // remove this circle from the active circles so the next click creates a new one to move
-      circles.pop();
+    if (circle.style.background === 'var(--purple)') {
+      // clamp the circle center inside the box boundaries
+      const clampedX = Math.min(Math.max(cx, boxRect.left + radius), boxRect.right - radius);
+      const clampedY = Math.min(Math.max(cy, boxRect.top + radius), boxRect.bottom - radius);
+      circle.style.left = `${clampedX - radius}px`;
+      circle.style.top = `${clampedY - radius}px`;
     } else {
-      // move the circle freely with the mouse
-      circle.style.left = `${x}px`;
-      circle.style.top = `${y}px`;
+      // move freely with the mouse
+      circle.style.left = `${cx - radius}px`;
+      circle.style.top = `${cy - radius}px`;
     }
   });
 };
