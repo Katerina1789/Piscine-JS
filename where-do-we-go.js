@@ -49,12 +49,11 @@ export const explore = () => {
   document.body.append(direction);
 
   // update location indicator with the given place data
-  const updateLocation = ({ name, coordinates, color }) => {
-    location.textContent = `${name}\n${coordinates}`;
-    location.style.color = color;
-    // encodeURI does not encode single quotes ('), only encodes special chars like spaces and °
-    location.setAttribute('href', `https://www.google.com/maps?q=${encodeURI(coordinates)}`);
-  };
+const updateLocation = ({ name, coordinates, color }) => {
+  location.textContent = `${name}\n${coordinates}`;
+  location.style.color = color;
+  location.href = `https://www.google.com/maps?q=${coordinates}`;
+};
 
   // set initial location to the first (northernmost) place
   updateLocation(sorted[0]);
