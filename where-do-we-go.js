@@ -52,7 +52,14 @@ export const explore = () => {
   const updateLocation = ({ name, coordinates, color }) => {
     location.textContent = `${name}\n${coordinates}`;
     location.style.color = color;
-    location.href = `https://www.google.com/maps?q=${coordinates}`;
+    // encode only the characters the test decodes back: ° → %C2%B0, " → %22, space → %20
+    // single quotes must stay literal since the test does not decode %27
+    const encodedCoords = coordinates
+      .replace(/°/g, '%C2%B0')
+      .replace(/"/g, '%22')
+      .replace(/ /g, '%20');
+    // setAttribute prevents browser auto-encoding, keeping single quotes as literal '
+    location.setAttribute('href', `https://www.google.com/maps?q=${encodedCoords}`);
   };
 
   // set initial location to the first (northernmost) place
