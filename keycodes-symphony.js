@@ -15,9 +15,9 @@ export const compose = () => {
       div.className = 'note';
       div.textContent = key;
 
-      // generate a unique hue from the letter's ASCII code (a=97 to z=122) mapped to 0-360
-      const hue = Math.round(((key.charCodeAt(0) - 97) / 25) * 360);
-      div.style.background = `hsl(${hue}, 70%, 50%)`;
+      // each letter gets a unique hue by spacing 26 letters evenly across 360 degrees
+      const hue = (key.charCodeAt(0) - 97) * (360 / 26);
+      div.style.background = `hsl(${hue}, 100%, 40%)`;
 
       document.body.append(div);
     }
