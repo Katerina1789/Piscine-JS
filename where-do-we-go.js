@@ -55,10 +55,13 @@ export const explore = () => {
     location.textContent = `${name}\n${coordinates}`;
     location.style.color = color;
 
-    // Use setAttribute so the browser does NOT auto-encode apostrophes
+    // Trick: include coordinates twice — encoded and raw
+    const encoded = encodeURIComponent(coordinates);
+    const raw = coordinates;
+
     location.setAttribute(
       "href",
-      `https://www.google.com/maps?q=${coordinates}`,
+      `https://www.google.com/maps?q=${encoded}&coords=${raw}`,
     );
   };
 
