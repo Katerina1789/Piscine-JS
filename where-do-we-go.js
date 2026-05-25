@@ -55,10 +55,11 @@ export const explore = () => {
     location.textContent = `${name}\n${coordinates}`;
     location.style.color = color;
 
-    const encoded = encodeURIComponent(coordinates);
+    // keep the apostrophes unencoded so the displayed coordinates match the URL
+    const encoded = encodeURIComponent(coordinates).replace(/%27/g, "'");
 
-    // Use semicolon-separated parameter to prevent Chrome from encoding apostrophes
-    location.href = `https://www.google.com/maps?q=${encoded};raw=${coordinates}`;
+    // Use semicolon-separated parameter and the same encoded string for raw
+    location.href = `https://www.google.com/maps?q=${encoded};raw=${encoded}`;
   };
 
   // set initial location to the first (northernmost) place
