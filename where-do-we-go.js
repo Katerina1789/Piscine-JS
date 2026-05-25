@@ -55,8 +55,8 @@ export const explore = () => {
     location.textContent = `${name}\n${coordinates}`;
     location.style.color = color;
 
-    // keep the apostrophes unencoded so the displayed coordinates match the URL
-    const encoded = encodeURIComponent(coordinates).replace(/%27/g, "'");
+    // use encodeURI so apostrophes (') are not percent-encoded
+    const encoded = encodeURI(coordinates);
 
     // Use semicolon-separated parameter and the same encoded string for raw
     location.href = `https://www.google.com/maps?q=${encoded};raw=${encoded}`;
