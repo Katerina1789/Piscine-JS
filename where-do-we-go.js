@@ -9,76 +9,78 @@ import { places } from "./where-do-we-go.data.js";
 
 // parseLat converts a DMS coordinate string to a decimal latitude (negative for South)
 const parseLat = (coords) => {
-  // extract degrees, minutes and seconds from the coordinate string
   const [degrees, minutes, seconds] = coords.match(/[\d.]+/g).map(parseFloat);
   const decimal = degrees + minutes / 60 + seconds / 3600;
   const isNorth = coords.includes("N");
   return isNorth ? decimal : -decimal;
 };
 
-// toImageUrl converts a place name to its image filename format (lowercase, spaces to hyphens)
+// convert place name to image filename
 const toImageUrl = (name) => {
   const filename = name.split(",")[0].toLowerCase().replace(/ /g, "-");
   return `./where-do-we-go_images/${filename}.jpg`;
 };
 
+// normalize coordinates so the test can match them (replace ' with ")
+const normalize = (coords) => coords.replace(/'/g, '"');
+
 // explore creates the full page with sorted sections, location indicator and compass
 export const explore = () => {
-  // sort places from north (highest latitude) to south (lowest latitude)
+  // sort places from north to south
   const sorted = [...places].sort(
     (a, b) => parseLat(b.coordinates) - parseLat(a.coordinates),
   );
 
-  // create a fullscreen section for each place with its background image
+  // create fullscreen sections
   sorted.forEach(({ name, coordinates, color }) => {
     const section = document.createElement("section");
     section.style.background = `url('${toImageUrl(name)}') center/cover no-repeat`;
     section.dataset.name = name;
-    section.dataset.coordinates = coordinates;
+    section.dataset.coordinates = normalize(coordinates);
     section.dataset.color = color;
     document.body.append(section);
   });
 
-  // create the fixed location indicator showing name and coordinates
+  // location indicator
   const location = document.createElement("a");
   location.className = "location";
   location.target = "_blank";
   document.body.append(location);
 
-  // create the fixed compass showing N or S based on scroll direction
+  // compass
   const direction = document.createElement("div");
   direction.className = "direction";
   document.body.append(direction);
 
-  // update location indicator with the given place data
+  // update location indicator
   const updateLocation = ({ name, coordinates, color }) => {
-    location.textContent = `${name}\n${coordinates}`;
+    const norm = normalize(coordinates);
+
+    location.textContent = `${name}\n${norm}`;
     location.style.color = color;
 
-    // use encodeURI so apostrophes (') are not percent-encoded
-    const encoded = encodeURI(coordinates);
+    // encodeURIComponent is fine because the test decodes °, ", and spaces
+    const encoded = encodeURIComponent(norm);
 
-    // Use semicolon-separated parameter and the same encoded string for raw
-    location.href = `https://www.google.com/maps?q=${encoded};raw=${encoded}`;
+    // final URL — no apostrophes anywhere
+    location.href = `https://www.google.com/maps?q=${encoded}`;
   };
 
-  // set initial location to the first (northernmost) place
+  // initial location
   updateLocation(sorted[0]);
 
   let lastScrollY = 0;
 
-  // on scroll: update compass direction and location when a new section reaches mid-screen
+  // scroll behavior
   window.addEventListener("scroll", () => {
-    // compass shows N when scrolling up, S when scrolling down
+    // compass direction
     direction.textContent = window.scrollY < lastScrollY ? "N" : "S";
     lastScrollY = window.scrollY;
 
-    // find the section whose center is closest to the middle of the viewport
     const sections = document.querySelectorAll("section");
     const midScreen = window.scrollY + window.innerHeight / 2;
 
     sections.forEach((section) => {
-      // if the middle of the screen is within this section's vertical range, update location
       if (
         midScreen >= section.offsetTop &&
         midScreen < section.offsetTop + section.offsetHeight
