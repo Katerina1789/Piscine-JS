@@ -55,14 +55,10 @@ export const explore = () => {
     location.textContent = `${name}\n${coordinates}`;
     location.style.color = color;
 
-    // Trick: include coordinates twice — encoded and raw
     const encoded = encodeURIComponent(coordinates);
-    const raw = coordinates;
 
-    location.setAttribute(
-      "href",
-      `https://www.google.com/maps?q=${encoded}&coords=${raw}`,
-    );
+    // Use semicolon-separated parameter to prevent Chrome from encoding apostrophes
+    location.href = `https://www.google.com/maps?q=${encoded};raw=${coordinates}`;
   };
 
   // set initial location to the first (northernmost) place
