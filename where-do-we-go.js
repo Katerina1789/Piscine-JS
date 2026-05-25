@@ -9,10 +9,11 @@ import { places } from './where-do-we-go.data.js'
 
 // parseLat converts a DMS coordinate string to a decimal latitude (negative for South)
 const parseLat = (coords) => {
-  // extract degrees value and N/S direction from coordinate string
-  const degrees = parseFloat(coords);
+  // extract degrees, minutes and seconds from the coordinate string
+  const [degrees, minutes, seconds] = coords.match(/[\d.]+/g).map(parseFloat);
+  const decimal = degrees + minutes / 60 + seconds / 3600;
   const isNorth = coords.includes('N');
-  return isNorth ? degrees : -degrees;
+  return isNorth ? decimal : -decimal;
 };
 
 // toImageUrl converts a place name to its image filename format (lowercase, spaces to hyphens)
