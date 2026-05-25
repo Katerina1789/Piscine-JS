@@ -9,11 +9,11 @@ This repository contains my work from the JS Piscine at Zone01 — a challenging
 
 ```
 📁 DATA/            // JS basics: data types, variables, functions, objects, arrays, basic logic and mathematical operations
-📁 LOOP/            // while, recursion, if, let, Array., Math., String.
-📁 FIND/            // everything RegEx
-📁 TIME/            // date and time manipulation commands and algorithms
-📁 CALL-ME-MAYBE/   // Array. commands and currying
-📁 DOM/             // 
+📁 LOOP/            // Control flow: while, recursion, conditionals, iteration patterns, Array methods, Math and String utilities
+📁 FIND/            // Pattern matching and text processing using regular expressions
+📁 TIME/            // Date and time manipulation: timestamps, intervals, timers, scheduling logic
+📁 CALL-ME-MAYBE/   // Functional programming: Array methods, callbacks, currying, composition
+📁 DOM/             // Browser DOM manipulation: events, scrolling, dynamic rendering, styling, selectors, interaction logic
 📁 OBJECT/          // 
 📁 ASYNC/           // 
 📁 NODE/            // 

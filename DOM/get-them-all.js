@@ -37,12 +37,3 @@ export const getBonannoPisano = () => {
   const remainingActive = Array.from(document.querySelectorAll('a.classical.active:not(#BonannoPisano)'));
   return [bonannoPisano, remainingActive];
 };
-
-/*
-TESTING:
-Open get-them-all.html in the browser and click each button in order:
-- "Get Architects" -> all <a> elements show "Architect", spans fade out
-- "Get Classical"  -> classical <a> elements show "Classical", others fade out
-- "Get Active"     -> active classical <a> elements show "Active", others fade out
-- "Get Bonanno"    -> BonannoPisano is highlighted in purple, others fade out
-*/
