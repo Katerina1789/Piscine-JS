@@ -3,10 +3,23 @@
 // Object.fromEntries(): rebuilds the object from resolved [key, value] pairs
 
 // all works like Promise.all but for objects — resolves all values and returns a new object with the same keys
-export const all = async (obj) => {
-  // resolve all values (plain values resolve immediately, promises wait)
-  const entries = await Promise.all(
-    Object.entries(obj).map(async ([key, value]) => [key, await Promise.resolve(value)])
-  );
-  return Object.fromEntries(entries);
+export const all = (obj) => {
+  const entries = Object.entries(obj);
+
+  // resolve each entry individually and collect into a new object
+  return new Promise((resolve, reject) => {
+    const result = {};
+    let remaining = entries.length;
+
+    // edge case: empty object resolves immediately
+    if (remaining === 0) return resolve({});
+
+    entries.forEach(([key, value]) => {
+      Promise.resolve(value).then((resolved) => {
+        result[key] = resolved;
+        // only resolve once all entries are done
+        if (--remaining === 0) resolve(result);
+      }).catch(reject);
+    });
+  });
 };
