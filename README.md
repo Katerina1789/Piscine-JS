@@ -14,7 +14,7 @@ This repository contains my work from the JS Piscine at Zone01 — a challenging
 📁 CALL-ME-MAYBE/   // Functional programming: Array methods, callbacks, currying, composition
 📁 DOM/             // Browser DOM manipulation: events, scrolling, dynamic rendering, styling, selectors, interaction logic
 📁 OBJECT/          // Object manipulation: deep copy, merging, currying, key/value/entry transformations, recursive structures
-📁 ASYNC/           
+📁 ASYNC/           // Asynchronous JavaScript: promises, async/await, fetch, error handling, concurrent operations
 📁 NODE/            
 📁 GROUP PROJECTS/  // Collaborative projects combining multiple units into full features
 ```
