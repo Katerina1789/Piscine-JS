@@ -10,5 +10,3 @@ export const all = async (obj) => {
   );
   return Object.fromEntries(entries);
 };
-
-// Learned to use Promise.resolve which wraps any value safely for awaiting
