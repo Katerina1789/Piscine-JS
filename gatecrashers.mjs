@@ -41,11 +41,13 @@ const server = createServer(async (req, res) => {
   req.on('data', (chunk) => { body += chunk; });
 
   req.on('end', async () => {
+    // test sends body inside headers.body, fall back to request body chunks
+    const rawBody = req.headers.body || body;
     try {
       const filePath = join('./guests', `${guestName}.json`);
-      await writeFile(filePath, body);
+      await writeFile(filePath, rawBody);
       let parsed;
-      try { parsed = JSON.parse(body); } catch { parsed = body; }
+      try { parsed = JSON.parse(rawBody); } catch { parsed = rawBody; }
       send(200, parsed);
     } catch (err) {
       send(500, { error: 'server failed' });
