@@ -83,7 +83,7 @@ if (command === 'create') {
 
   await saveList(list);
 
-} else if (command === 'ls' || !command) {
+} else if (command === 'ls') {
   const list = await readList();
   const entries = Object.entries(list);
   if (entries.length === 0) {
@@ -92,6 +92,7 @@ if (command === 'create') {
     entries.forEach(([key, val]) => console.log(`- ${key} (${val})`));
   }
 
-} else if (command === 'help' || !command) {
+} else {
+  // no command or unrecognised command: print help
   console.log(help);
 }
