@@ -55,6 +55,15 @@ if (command === 'create') {
   if (!elem) { process.stderr.write('No elem specified.\n'); process.exit(0); }
 
   const list = await readList();
+  const amount = rawAmount === undefined ? undefined : Number(rawAmount);
+
+  // negative amount behaves like add — even if elem doesn't exist yet
+  if (amount !== undefined && !isNaN(amount) && amount < 0) {
+    const current = list[elem] || 0;
+    list[elem] = current - amount;
+    await saveList(list);
+    process.exit(0);
+  }
 
   // elem not in list: do nothing
   if (!(elem in list)) { await saveList(list); process.exit(0); }
@@ -62,12 +71,11 @@ if (command === 'create') {
   if (rawAmount === undefined) {
     // no amount: delete the entry entirely
     delete list[elem];
-  } else if (isNaN(Number(rawAmount))) {
+  } else if (isNaN(amount)) {
     // NaN amount: print error, do nothing
     process.stderr.write('Unexpected request: nothing has been removed.\n');
   } else {
-    const amount = Number(rawAmount);
-    // negative amount behaves like add
+    // positive amount: subtract from current value
     const newVal = list[elem] - amount;
     if (newVal <= 0) delete list[elem];
     else list[elem] = newVal;
