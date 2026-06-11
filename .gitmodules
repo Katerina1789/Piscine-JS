@@ -1,3 +1,9 @@
 [submodule "RAIDS/crossword"]
 	path = RAIDS/crossword
 	url = https://github.com/Katerina1789/crossword.git
+[submodule "RAIDS/sortable"]
+	path = RAIDS/sortable
+	url = https://github.com/Katerina1789/sortable.git
+[submodule "RAIDS/clonernews"]
+	path = RAIDS/clonernews
+	url = https://github.com/Katerina1789/clonernews.git
