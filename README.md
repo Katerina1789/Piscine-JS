@@ -3,7 +3,7 @@
 
 **Foundation piscine in JavaScript programming as part of the curriculum.**
 
-This repository contains my work from the JS Piscine at Zone01 — a challenging yet exciting month designed to introduce core JavaScript concepts, strengthen problem‑solving skills and build confidence in writing clean, functional code.
+This repository contains my work from the JS Piscine at Zone01 - a challenging yet exciting month designed to introduce core JavaScript concepts, strengthen problem‑solving skills and build confidence in writing clean, functional code.
 
 ## Structure
 ```
@@ -16,11 +16,11 @@ This repository contains my work from the JS Piscine at Zone01 — a challenging
 📁 OBJECT/          // Object manipulation: deep copy, merging, currying, key/value/entry transformations, recursive structures
 📁 ASYNC/           // Asynchronous JavaScript: promises, async/await, fetch, error handling, concurrent operations
 📁 NODE/            // Server-side JavaScript: process.argv, file system, HTTP servers, authentication, CLI tools, encoding, Node.js built-ins, file system, HTTP, modules, CLI tools
-📁 GROUP PROJECTS/  // Collaborative projects combining multiple units into full features or applications
+📁 RAIDS/  // Collaborative projects combining multiple units into full features or applications
 ```
 
 ## Navigation
-Each quest builds upon the previous, progressing from basic syntax to more advanced features such as asynchronous programming and DOM manipulation.
+Each unit builds upon the previous, progressing from basic syntax to more advanced features such as asynchronous programming and DOM manipulation.
 This repository showcases the foundational skills developed throughout the program.
 
 ## Purpose
